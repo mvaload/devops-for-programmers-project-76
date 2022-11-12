@@ -1,6 +1,6 @@
 - name: Deploy project
   hosts: all
-  gather_facts: no
+  become: yes
   roles:
     - geerlingguy.pip
 
@@ -9,12 +9,25 @@
       - name: docker
 
   tasks:
+    - name: make env
+      ansible.builtin.template:
+        src: templates/env.j2
+        dest: /.env
+        mode: '0644'
+
     - name: start app
       community.docker.docker_container:
         name: app
         image: "redmine:5.0.2-bullseye"
         restart_policy: always
         state: started
+        env_file: /.env
         ports:
           - "80:3000"
           - "443:3000"
+
+
+- name: Monitoring
+  hosts: webservers
+  roles:
+    - { role: datadog.datadog, become: true }
