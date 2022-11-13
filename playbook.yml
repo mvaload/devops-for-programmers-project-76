@@ -1,6 +1,6 @@
 - name: Deploy project
   hosts: all
-  become: yes
+  become: true
   roles:
     - geerlingguy.pip
 
@@ -9,13 +9,13 @@
       - name: docker
 
   tasks:
-    - name: make env
+    - name: Make env
       ansible.builtin.template:
         src: templates/env.j2
         dest: /.env
         mode: '0644'
 
-    - name: start app
+    - name: Start app
       community.docker.docker_container:
         name: app
         image: "redmine:5.0.2-bullseye"
