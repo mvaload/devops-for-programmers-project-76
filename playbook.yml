@@ -10,11 +10,11 @@
 
   tasks:
     - name: Add Docker Repository
-      apt_repository:
+      ansible.builtin.apt_repository:
         repo: deb https://download.docker.com/linux/ubuntu focal stable
         state: present
     - name: Update apt and install docker-ce
-      apt: update_cache=yes name=docker-ce state=latest
+      ansible.builtin.apt: update_cache=yes name=docker-ce state=latest
 
     - name: Make env
       ansible.builtin.template:
