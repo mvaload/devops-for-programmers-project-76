@@ -14,7 +14,7 @@
         repo: deb https://download.docker.com/linux/ubuntu focal stable
         state: present
     - name: Update apt and install docker-ce
-      ansible.builtin.apt: update_cache=yes name=docker-ce state=latest
+      ansible.builtin.apt: update_cache=yes name=docker-ce state=present
 
     - name: Make env
       ansible.builtin.template:
